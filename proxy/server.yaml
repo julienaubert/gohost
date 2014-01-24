@@ -1,0 +1,21 @@
+config:
+  user_home : '{{USER_HOME}}'
+  pythonpath : '{{USER_HOME}}/conf/:{{USER_HOME}}/etc'
+  server_name: 'example'
+  server_admin: 'julien.aubert.mail@gmail.com'
+
+server:
+  ssh_port: 22       # note: <1024
+  port_80_via: 8080
+  port_443_via: 8443
+
+nginx:
+  server:
+
+supervisord:
+  logfile_maxbytes: 5MB
+  loglevel: INFO
+
+proxy:
+  ssl_cert: ''
+  ssl_pem: ''

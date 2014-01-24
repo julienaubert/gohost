@@ -1,0 +1,9 @@
+PyYAML==3.10
+pep8
+Fabric==1.8
+-e git://github.com/julienaubert/django-buildhost.git@feature/get_pkg_and_fixes#egg=django_buildhost
+#-e git://github.com/saxix/django-buildhost.git#egg=django_buildhost
+jinja2
+requests
+flake8>=2.1
+unipath>=1.0

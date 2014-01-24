@@ -1,0 +1,79 @@
+====================================================================
+Reliable setup on a VPS for: wsgi-apps behind a reverse proxy
+
+Stack: uwsgi, nginx (both as app-webserver and for reverse-proxy)
+
+VPS: currently only www.glesys.se supported
+
+A server is bootstrapped as either "proxy" or "app".
+
+proxy   - to setup/manage a server acting as reverse proxy
+app     - to setup/manage a server acting as host for app(s)
+
+Proxy is used for security and for reliability/performance:
+- load-balancing between app-servers. [not done]
+- handle ssl
+- app-servers can be firewalled away from internet
+
+App server is used for:
+- host postgres database
+- host web-app (listen on some port which the proxy forwards to)
+
+Concepts:
+config:     yaml files with specific settings
+Templates:  various conf/ini files rendered with the config values
+
+===================================================================
+
+
+Example:
+
+    # edit .glesys with your GleSys keys and server (see gohost/.glesys_default)
+    ./bootstrap.py myserver --proxy
+    fab app.create_instances:myapp
+    fab -R alpha app.example_deploy
+    open https://example/alpha/
+    fab -R beta app.example_deploy
+    open https://example/beta/
+
+
+How
+    1. install in your app: pip install gohost
+    2. configure your settings:
+        workon myapp
+        vim fabfile.py # see gohost/fabfile.py for example
+        vim .glesys # add your keys/server config (see gohost/.glesys_default)
+    3. bootstrap your servers
+        bootstrap myproxyserver --proxy
+        bootstrap myappserver --app
+    4. setup your app:
+        fab app.create_instances:myapp
+
+        modify your fabfile to make your deploy task (see app.example_deploy for an example)
+        make sure you place wsgi.py at ~/conf/wsgi.py as part of deploy, and ensure your wsgi.py has at the top:
+            import os, sys
+            sys.path.insert(0, <path to where you put your project in your deploy>)
+
+        run YOUR deploy task:
+        fab -R alpha deploy
+
+
+Pattern for ongoing maintenance:
+
+    deploy your app
+        fab -R alpha deploy
+        fab -R beta deploy
+
+    deploy with proxy switch [not yet done]
+        fab -R prod2 deploy
+        fab proxy.switch:prod2
+
+        fab -R prod1 deploy
+        fab proxy.switch:prod1
+
+
+Customize the templates: [not supported yet], idea:
+    cp -r gohost/proxy/templates myapp/sysop/proxy/.
+    cp -r gohost/app/templates myapp/sysop/app/.
+    export CC_PROXY_TEMPLATES=myproxy/sysop/proxy/
+    export CC_APP_TEMPLATES=myapp/sysop/app/

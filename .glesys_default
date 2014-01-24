@@ -1,0 +1,23 @@
+{
+    "api": {
+        "cl_user": "xxx",
+        "api_key": "xxx"
+    },
+    "servers": {
+        "mylittleserver": {
+            "platform": "OpenVZ",
+            "template_name": "Debian 7.0 64-bit",
+            "disk_gb": 5,
+            "memory_mb": 128,
+            "cpu_cores": 1,
+            "transfer": 50,
+            "root_password": "123456789",
+            "hostname": "example",
+            "datacenter": "Falkenberg",
+            "description": "",
+            "ip": "any",
+            "ipv6": "none",
+            "admin_ssh_key": "id_rsa.admin_glesys_example"
+        }
+    }
+}

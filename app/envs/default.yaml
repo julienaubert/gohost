@@ -1,0 +1,21 @@
+config:
+  user_home : '{{USER_HOME}}'
+  pythonpath : '{{USER_HOME}}/conf/:{{USER_HOME}}/etc'
+  server_name:
+  server_admin: 'julien.aubert.mail@gmail.com'
+
+server:
+  ssh_port: 22       # note: <1024
+  port_80_via: 8080
+  port_443_via: 8443
+
+supervisord:
+  logfile_maxbytes: 5MB
+  loglevel: INFO
+
+django:
+  settings: settings
+
+uwsgi:
+  socket: '{{USER_HOME}}/var/uwsgi.sock'
+  processes: 2

@@ -1,0 +1,5 @@
+#!/bin/sh -e
+
+python /etc/init_supervisors.py
+
+exit 0

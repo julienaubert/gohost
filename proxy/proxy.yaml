@@ -1,0 +1,4 @@
+proxy:
+  ssl_cert: '{{USER_HOME}}/conf/www.example.com.crt'
+  ssl_key: '{{USER_HOME}}/conf/www.exampe.com.key'
+
